@@ -194,21 +194,17 @@ class RandomLetterApp {
     }
 }
 
-// Register service worker and manifest only when served over HTTP/HTTPS
-if (window.location.protocol !== 'file:') {
-    // Add manifest link
-    const manifestLink = document.createElement('link');
-    manifestLink.rel = 'manifest';
-    manifestLink.href = 'manifest.json';
-    document.head.appendChild(manifestLink);
-    
-    // Register service worker for offline support
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('service-worker.js')
-                .catch(err => console.log('Service worker registration failed:', err));
-        });
-    }
+// Register service worker for PWA functionality
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/Codex/service-worker.js')
+            .then((registration) => {
+                console.log('Service Worker registered:', registration);
+            })
+            .catch((err) => {
+                console.log('Service worker registration failed:', err);
+            });
+    });
 }
 
 // Initialize app when DOM is ready

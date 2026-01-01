@@ -1,8 +1,9 @@
 {
   "name": "CODEX",
   "short_name": "CODEX",
-  "description": "Generate random letters with customizable settings",
-  "start_url": "/",
+  "description": "Random letter generator with customizable settings",
+  "start_url": "/Codex/",
+  "scope": "/Codex/",
   "display": "standalone",
   "background_color": "#faf8f3",
   "theme_color": "#8B4513",
