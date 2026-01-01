@@ -22,6 +22,7 @@ class RandomLetterApp {
         document.getElementById('backBtn').addEventListener('click', () => this.showMain());
         document.getElementById('withReplacementBtn').addEventListener('click', () => this.setReplacementMode(true));
         document.getElementById('withoutReplacementBtn').addEventListener('click', () => this.setReplacementMode(false));
+        document.getElementById('resetSessionBtn').addEventListener('click', () => this.resetSession());
     }
 
     renderLettersGrid() {
@@ -70,7 +71,9 @@ class RandomLetterApp {
         
         // Reset used letters when switching modes
         this.usedLetters.clear();
+        this.hideAllLettersUsedMessage();
         this.saveSettings();
+        this.updateUI();
     }
 
     getAvailableLetters() {
@@ -90,22 +93,35 @@ class RandomLetterApp {
         if (this.withReplacement) {
             // Simple random selection with replacement
             letter = available[Math.floor(Math.random() * available.length)];
+            this.hideAllLettersUsedMessage();
         } else {
             // Without replacement: track used letters
             const unused = available.filter(l => !this.usedLetters.has(l));
             
             if (unused.length === 0) {
-                // All letters used, reset
-                this.usedLetters.clear();
-                letter = available[Math.floor(Math.random() * available.length)];
+                // All letters used, show message
+                this.showAllLettersUsedMessage();
+                return;
             } else {
                 letter = unused[Math.floor(Math.random() * unused.length)];
+                this.usedLetters.add(letter);
+                
+                // Check if this was the last letter
+                const remaining = available.filter(l => !this.usedLetters.has(l));
+                if (remaining.length === 0) {
+                    // This was the last available letter
+                    this.displayLetter(letter);
+                    this.showAllLettersUsedMessage();
+                    this.saveSettings();
+                    return;
+                } else {
+                    this.hideAllLettersUsedMessage();
+                }
             }
-            
-            this.usedLetters.add(letter);
         }
 
         this.displayLetter(letter);
+        this.saveSettings();
     }
 
     displayLetter(letter) {
@@ -149,6 +165,18 @@ class RandomLetterApp {
             generateBtn.disabled = false;
             generateBtn.textContent = 'Generate Letter';
         }
+        
+        // Update all letters used message visibility
+        if (!this.withReplacement && available.length > 0) {
+            const unused = available.filter(l => !this.usedLetters.has(l));
+            if (unused.length === 0) {
+                this.showAllLettersUsedMessage();
+            } else {
+                this.hideAllLettersUsedMessage();
+            }
+        } else {
+            this.hideAllLettersUsedMessage();
+        }
     }
 
     showSettings() {
@@ -159,6 +187,28 @@ class RandomLetterApp {
     showMain() {
         document.getElementById('settingsView').classList.remove('active');
         document.getElementById('mainView').classList.add('active');
+        this.updateUI();
+    }
+
+    showAllLettersUsedMessage() {
+        const message = document.getElementById('allLettersUsedMessage');
+        if (message) {
+            message.style.display = 'block';
+        }
+    }
+
+    hideAllLettersUsedMessage() {
+        const message = document.getElementById('allLettersUsedMessage');
+        if (message) {
+            message.style.display = 'none';
+        }
+    }
+
+    resetSession() {
+        this.usedLetters.clear();
+        this.saveSettings();
+        this.hideAllLettersUsedMessage();
+        this.updateUI();
     }
 
     saveSettings() {

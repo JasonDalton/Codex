@@ -29,6 +29,10 @@
                 <div id="letterOutput" class="letter">?</div>
             </div>
             
+            <div id="allLettersUsedMessage" class="all-letters-used-message" style="display: none;">
+                All letters have been used
+            </div>
+            
             <button id="generateBtn" class="generate-btn">Generate Letter</button>
             
             <button id="settingsBtn" class="settings-btn" aria-label="Settings">
@@ -65,6 +69,11 @@
                     <label class="setting-label">Excluded Letters</label>
                     <div class="letters-grid" id="lettersGrid"></div>
                     <p class="setting-description">Tap letters to exclude them from generation.</p>
+                </div>
+
+                <div class="setting-group">
+                    <button id="resetSessionBtn" class="reset-btn">Reset Session</button>
+                    <p class="setting-description">Clear all used letters to make them available again.</p>
                 </div>
             </div>
         </div>

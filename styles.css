@@ -149,6 +149,41 @@ body {
     box-shadow: none;
 }
 
+.all-letters-used-message {
+    text-align: center;
+    padding: 16px;
+    margin: 16px 0;
+    font-size: 16px;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: var(--card-bg);
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(139, 69, 19, 0.2);
+}
+
+.reset-btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-color);
+    background-color: var(--card-bg);
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.reset-btn:active {
+    background-color: var(--primary-color);
+    color: #faf8f3;
+    transform: scale(0.98);
+}
+
 .settings-btn {
     background: none;
     border: none;
